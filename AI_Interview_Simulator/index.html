@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>InterviewAce — AI Interview Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+
+  <main id="authScreen" class="auth-layout">
+    <section class="auth-art">
+      <div class="brand"><span class="brand-mark">✦</span> Interview<span>Ace</span></div>
+      <div class="art-copy">
+        <div class="eyebrow"><span class="pulse"></span> YOUR CAREER, YOUR NEXT LEVEL</div>
+        <h1>Practice with purpose.<br><em>Interview with confidence.</em></h1>
+        <p>A personal interview practice studio built to help you turn preparation into your next opportunity.</p>
+        <div class="art-stats">
+          <div><strong>10+</strong><small>Career tracks</small></div>
+          <div><strong>3</strong><small>Difficulty levels</small></div>
+          <div><strong>∞</strong><small>Practice sessions</small></div>
+        </div>
+      </div>
+      <div class="art-footer">✦ A little practice today. A big difference tomorrow.</div>
+    </section>
+    <section class="auth-panel">
+      <div class="mobile-brand brand"><span class="brand-mark">✦</span> Interview<span>Ace</span></div>
+      <div class="auth-card">
+        <div class="auth-icon">↗</div>
+        <p class="eyebrow">YOUR PRACTICE SPACE</p>
+        <h2 id="authTitle">Welcome back</h2>
+        <p class="muted" id="authSubtitle">Sign in to continue your progress.</p>
+        <form id="authForm">
+          <div id="nameField" class="field hidden">
+            <label for="authName">Full name</label>
+            <input id="authName" type="text" placeholder="e.g. Alex Morgan" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="authEmail">Email address</label>
+            <input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="authPassword">Password</label>
+            <div class="password-wrap"><input id="authPassword" type="password" placeholder="At least 6 characters" minlength="6" autocomplete="current-password" required /><button type="button" id="togglePassword" class="show-password" aria-label="Show password">Show</button></div>
+          </div>
+          <button class="btn btn-primary full" id="authSubmit" type="submit">Sign in <span>→</span></button>
+        </form>
+        <p class="auth-switch"><span id="switchPrompt">New to InterviewAce?</span> <button id="switchAuth" class="text-button">Create an account</button></p>
+        <div class="demo-note"><span>ⓘ</span> Demo project: accounts are stored in this browser only. Do not use a real password.</div>
+      </div>
+      <p class="auth-bottom">Built for curious minds and future professionals.</p>
+    </section>
+  </main>
+
+  <div id="app" class="app-shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand sidebar-brand" href="#"><span class="brand-mark">✦</span> Interview<span>Ace</span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-view="practice"><span>◎</span> Practice interview</button>
+        <button class="nav-item" data-view="history"><span>◷</span> Session history</button>
+        <button class="nav-item" data-view="profile"><span>♙</span> My profile</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-tip"><span class="tip-icon">✧</span><strong>Small steps count.</strong><p>Consistency beats cramming. Try one question every day.</p></div>
+        <button class="nav-item logout" id="logoutBtn"><span>↪</span> Sign out</button>
+        <div class="user-mini"><div class="avatar" id="sideAvatar">A</div><div class="user-mini-text"><strong id="sideName">Alex Morgan</strong><small id="sideEmail">alex@example.com</small></div><span class="online-dot"></span></div>
+      </div>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div><p class="top-kicker">YOUR PERSONAL COACH</p><div class="top-title" id="topTitle">Dashboard</div></div>
+        <div class="top-actions"><div class="today-chip"><span>◷</span> <span id="todayDate"></span></div><div class="text-size-tools" aria-label="Text size controls"><button id="fontDown" title="Decrease text size" aria-label="Decrease text size">A−</button><button id="fontUp" title="Increase text size" aria-label="Increase text size">A+</button></div><button id="themeToggle" class="theme-toggle" title="Toggle light and dark theme" aria-label="Toggle theme">☾</button><div class="top-avatar" id="topAvatar">A</div></div>
+      </header>
+
+      <section id="view-dashboard" class="view">
+        <div class="welcome-row">
+          <div><p class="eyebrow">MONDAY MOTIVATION, EVERY DAY</p><h1>Ready to level up, <span id="welcomeName">Alex</span>? <span class="wave">✦</span></h1><p class="muted">Your next opportunity starts with the practice you put in today.</p></div>
+          <button class="btn btn-primary" data-go="practice">Start an interview <span>→</span></button>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon violet">▣</span><span class="stat-trend">ALL TIME</span></div><div class="stat-value" id="statSessions">0</div><div class="stat-label">Practice sessions</div><div class="stat-foot">Every session moves you forward</div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon mint">◉</span><span class="stat-trend">AVERAGE</span></div><div class="stat-value"><span id="statScore">—</span><small id="scoreSuffix"></small></div><div class="stat-label">Average score</div><div class="stat-foot">Your answers, measured over time</div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon amber">◷</span><span class="stat-trend">TOTAL</span></div><div class="stat-value" id="statMinutes">0<small> min</small></div><div class="stat-label">Time invested</div><div class="stat-foot">Time spent sharpening your skills</div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon blue">↗</span><span class="stat-trend">BEST RESULT</span></div><div class="stat-value"><span id="statBest">—</span><small id="bestSuffix"></small></div><div class="stat-label">Personal best</div><div class="stat-foot">A result worth building on</div></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel progress-panel">
+            <div class="panel-heading"><div><h3>Your progress</h3><p class="muted">Your recent interview performance</p></div><span class="panel-pill">LAST 7 SESSIONS</span></div>
+            <div id="progressChart" class="chart-area"><div class="empty-chart"><span>↗</span><strong>Your progress starts here</strong><p>Complete a practice session to see your scores.</p></div></div>
+            <div class="chart-legend"><span><i></i> Interview score</span><span class="muted">Score out of 100</span></div>
+          </article>
+          <article class="panel focus-panel">
+            <div class="panel-heading"><div><h3>Quick practice</h3><p class="muted">Choose a track and get started</p></div><span class="sparkle">✦</span></div>
+            <div class="quick-role-list">
+              <button class="quick-role" data-role="Software Developer"><span class="role-emoji">⌘</span><span><strong>Software Developer</strong><small>Technical · Problem solving</small></span><span class="role-arrow">↗</span></button>
+              <button class="quick-role" data-role="Data Analyst"><span class="role-emoji green">▥</span><span><strong>Data Analyst</strong><small>Insights · SQL · Metrics</small></span><span class="role-arrow">↗</span></button>
+              <button class="quick-role" data-role="Marketing Executive"><span class="role-emoji orange">◈</span><span><strong>Marketing Executive</strong><small>Creativity · Strategy</small></span><span class="role-arrow">↗</span></button>
+            </div>
+            <button class="btn btn-soft full" data-go="practice">Explore all roles <span>→</span></button>
+          </article>
+        </div>
+        <article class="panel recent-panel"><div class="panel-heading"><div><h3>Recent sessions</h3><p class="muted">A quick look at your latest practice</p></div><button class="text-button" data-go="history">View all →</button></div><div id="recentSessions" class="table-wrap"></div></article>
+      </section>
+
+      <section id="view-practice" class="view hidden">
+        <div class="page-intro"><p class="eyebrow">PREPARE WITH INTENTION</p><h1>Practice interview</h1><p class="muted">Set up your session. Your future self will thank you.</p></div>
+        <div id="setupPanel" class="panel setup-panel">
+          <div class="setup-heading"><div class="setup-symbol">✦</div><div><h2>Build your interview</h2><p class="muted">Make it feel like the real thing — at your own pace.</p></div></div>
+          <div class="form-grid">
+            <div class="field"><label for="roleSelect">Job role</label><select id="roleSelect"><option>Software Developer</option><option>Frontend Developer</option><option>Data Analyst</option><option>UI/UX Designer</option><option>Marketing Executive</option><option>Business Analyst</option><option>Customer Support</option><option>HR Executive</option><option>Project Manager</option><option>General / Fresher</option></select><small>Questions are tailored to your selected track.</small></div>
+            <div class="field"><label for="difficultySelect">Difficulty level</label><select id="difficultySelect"><option value="Easy">Easy — Build confidence</option><option value="Medium" selected>Medium — Interview ready</option><option value="Hard">Hard — Challenge me</option></select><small>Choose a level that matches your goal.</small></div>
+            <div class="field"><label for="questionCount">Number of questions</label><select id="questionCount"><option value="5">5 questions · Quick warm-up</option><option value="8" selected>8 questions · Standard</option><option value="10">10 questions · Deep practice</option></select><small>A mix of questions from the role bank.</small></div>
+            <div class="field"><label for="timerSelect">Time per question</label><select id="timerSelect"><option value="30">30 seconds · Quick response</option><option value="60" selected>60 seconds · Balanced</option><option value="90">90 seconds · Detailed answer</option><option value="120">2 minutes · In-depth</option></select><small>The timer can be paused during practice.</small></div>
+          </div>
+          <div class="session-includes"><div><span>✓</span> Randomized questions</div><div><span>✓</span> Answer feedback</div><div><span>✓</span> Performance report</div><div><span>✓</span> Session history</div></div>
+          <button id="beginInterview" class="btn btn-primary begin-btn">Begin interview <span>→</span></button>
+        </div>
+        <div id="interviewPanel" class="interview-layout hidden">
+          <div class="interview-main panel">
+            <div class="interview-top"><div><span class="live-dot"></span><span class="tiny-label">LIVE PRACTICE SESSION</span></div><div class="interview-head-actions"><button id="bookmarkQuestion" class="btn btn-outline bookmark-btn" title="Save this question for later">☆ Save question</button><button id="quitInterview" class="text-button danger-text">End session ×</button></div></div>
+            <div class="question-meta"><span class="question-counter" id="questionCounter">QUESTION 01 / 08</span><span class="difficulty-badge" id="questionDifficulty">MEDIUM</span></div>
+            <div class="question-progress"><div id="questionProgressBar"></div></div>
+            <h2 id="questionText">Tell me about yourself.</h2>
+            <p id="questionHint" class="question-hint">Keep your answer clear, relevant, and structured.</p>
+            <div class="answer-toolbar"><label for="answerInput">YOUR ANSWER</label><span id="wordCount">0 words</span></div>
+            <textarea id="answerInput" placeholder="Take a breath, gather your thoughts, and type your answer here..." rows="7"></textarea>
+            <div class="answer-tools"><button id="recordBtn" class="btn btn-outline"><span>🎙</span> Record answer</button><span id="recordStatus" class="muted record-status">Voice input requires browser microphone permission.</span><button id="clearAnswer" class="text-button">Clear</button></div>
+            <div id="answerFeedback" class="answer-feedback hidden"></div>
+            <div class="interview-bottom"><button id="prevQuestion" class="btn btn-ghost" disabled>← Previous</button><div class="save-indicator" id="saveIndicator">● Draft saves as you type</div><button id="nextQuestion" class="btn btn-primary">Next question →</button></div>
+          </div>
+          <aside class="interview-side">
+            <div class="panel timer-panel"><div class="panel-heading"><h3>Time remaining</h3><span class="timer-icon">◷</span></div><div class="timer-ring" id="timerRing"><div><strong id="timerDisplay">01:00</strong><small>MIN : SEC</small></div></div><div class="timer-actions"><button id="pauseTimer" class="btn btn-soft full">Ⅱ Pause timer</button><button id="resetTimer" class="text-button">↻ Reset timer</button></div></div>
+            <div class="panel session-progress"><h3>Session checklist</h3><p class="muted">One question at a time.</p><div id="questionDots" class="question-dots"></div><div class="side-divider"></div><div class="side-stat"><span>Answered</span><strong id="answeredCount">0 / 8</strong></div><div class="side-stat"><span>Role</span><strong id="sessionRole">Developer</strong></div><div class="side-stat"><span>Level</span><strong id="sessionLevel">Medium</strong></div></div>
+            <div class="side-encouragement"><span>✧</span><p><strong>Pro tip</strong><br>Use a simple structure: situation, action, result. Specific examples make answers memorable.</p></div>
+          </aside>
+        </div>
+        <div id="resultPanel" class="panel result-panel hidden"></div>
+      </section>
+
+      <section id="view-history" class="view hidden">
+        <div class="page-intro"><p class="eyebrow">LOOK HOW FAR YOU'VE COME</p><h1>Session history</h1><p class="muted">Every attempt is a step towards your next opportunity.</p></div>
+        <div class="panel history-panel"><div class="panel-heading"><div><h3>All practice sessions</h3><p class="muted">Your completed interviews and scores</p></div><div class="history-actions"><button id="exportHistory" class="btn btn-outline">Export CSV ↓</button><button id="clearHistory" class="text-button danger-text">Clear history</button></div></div><div id="historyTable" class="table-wrap"></div></div>
+      </section>
+
+      <section id="view-profile" class="view hidden">
+        <div class="page-intro"><p class="eyebrow">YOUR SPACE, YOUR JOURNEY</p><h1>My profile</h1><p class="muted">Manage your details and keep your practice organized.</p></div>
+        <div class="profile-grid">
+          <div class="panel profile-card"><div class="profile-cover"></div><div class="profile-content"><div class="profile-avatar" id="profileAvatar">A</div><h2 id="profileName">Alex Morgan</h2><p class="muted" id="profileEmail">alex@example.com</p><span class="member-badge">✦ InterviewAce member</span><div class="profile-stats"><div><strong id="profileSessions">0</strong><span>Sessions</span></div><div><strong id="profileAvg">—</strong><span>Average score</span></div><div><strong id="profileBest">—</strong><span>Best score</span></div></div></div></div>
+          <div class="panel profile-form"><h3>Personal details</h3><p class="muted">Update the name shown in your workspace.</p><form id="profileForm"><div class="field"><label for="profileNameInput">Display name</label><input id="profileNameInput" required maxlength="60" /></div><div class="field"><label for="profileEmailInput">Email address</label><input id="profileEmailInput" disabled /></div><button class="btn btn-primary" type="submit">Save changes <span>✓</span></button></form><div class="saved-questions-box"><div class="saved-heading"><div><h3>Saved questions</h3><p class="muted">Questions you bookmarked while practicing.</p></div><span class="saved-count" id="savedQuestionCount">0</span></div><div id="savedQuestionsList" class="saved-questions-list"><p class="empty-saved">No saved questions yet. Bookmark a question during practice.</p></div></div><div class="privacy-note"><span>ⓘ</span><p><strong>Local demo storage</strong><br>Your account and sessions stay in this browser's local storage. This prototype has no server or cloud sync.</p></div></div>
+        </div>
+      </section>
+      <footer class="app-footer"><span>✦ InterviewAce</span><span>Practice thoughtfully. Grow confidently.</span><span>Made for your next big step.</span></footer>
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
